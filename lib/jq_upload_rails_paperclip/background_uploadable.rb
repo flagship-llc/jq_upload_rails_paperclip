@@ -27,7 +27,6 @@ module JqUploadRailsPaperclip
       @klass.send(:before_validation) do
         _remove_image = send(:"remove_#{name}")
         if _remove_image == '1'
-          self.image = nil
           send(:"#{name}=", nil)
           send(:"#{name}_id=", 0)
         end
