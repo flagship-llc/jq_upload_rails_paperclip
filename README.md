@@ -60,9 +60,21 @@ The installation process is a little convoluted at this point, but I'll be worki
     //= require jq_upload_rails_paperclip
     ```
 
+9. In your controller accepting the parameters for creation / updating, make sure you permit them. The following example is for a model named Resource, with a `background_uploadable :profile_image`.
+
+    ```
+    def resource_params
+      params.require(:resource).permit :remove_profile_image, :profile_image_id
+    end
+    ```
+
 ## Usage
 
 TODO: Write usage instructions here
+
+## Caveats
+
+* You must have a `belongs_to :user` relation in the resource, if the resource is not User itself.
 
 ## Contributing
 

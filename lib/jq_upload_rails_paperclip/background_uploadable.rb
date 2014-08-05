@@ -38,7 +38,13 @@ module JqUploadRailsPaperclip
       @klass.send(:before_validation) do
         _image_id = send(:"#{name}_id").to_i
         if _image_id > 0
-          upload = user.uploads.find _image_id
+          upload_base_model = if self.kind_of? User
+                                self
+                              else
+                                user
+                              end
+
+          upload = upload_base_model.uploads.find _image_id
           send(:"#{name}=", upload.file)
         end
       end
