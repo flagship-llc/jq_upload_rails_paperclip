@@ -9,7 +9,6 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Keitaroh Kobayashi"]
   spec.email         = ["keita@kkob.us"]
   spec.summary       = %q{A quick library to make uploading files in the background less painful.}
-  # spec.description   = %q{TODO: Write a longer description. Optional.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
