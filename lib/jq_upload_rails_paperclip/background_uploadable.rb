@@ -17,11 +17,23 @@ module JqUploadRailsPaperclip
     private
 
     def define_attributes
-      @klass.send :attr_accessor, :"#{@name}_id"
+      @klass.send :attr_accessor, :"#{@name}_id", :"remove_#{@name}"
     end
 
     def add_active_record_callbacks
       name = @name
+
+      # Remove the image if the remove_image tag is set.
+      @klass.send(:before_validation) do
+        _remove_image = send(:"remove_#{name}")
+        if _remove_image == '1'
+          self.image = nil
+          send(:"#{name}=", nil)
+          send(:"#{name}_id=", 0)
+        end
+        send(:"remove_#{name}=", nil)
+      end
+
       # Move the image from the upload
       @klass.send(:before_validation) do
         _image_id = send(:"#{name}_id").to_i
