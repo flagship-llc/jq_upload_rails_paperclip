@@ -38,6 +38,8 @@ $ () ->
         $remove_image_controls.removeClass 'hidden'
 
         $upload_id_holder.val result.id
+      .bind 'fileuploadfail', (e, data) ->
+        alert 'File upload failed.'
 
   install_uploaders()
 

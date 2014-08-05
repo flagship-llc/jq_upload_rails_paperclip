@@ -10,6 +10,8 @@ module JqUploadRailsPaperclip
 
     validates :target_type, :target_attr, presence: true
 
+    validate :instance_validations
+
     def file_url
       file.url(:thumbnail)
     end
@@ -24,5 +26,27 @@ module JqUploadRailsPaperclip
     #     }
     #   end
     # end
+
+    private
+
+    def instance_validations
+      klass = target_klass
+      validators = klass.validators
+      att = target_attr.to_sym
+
+      validators.select do |e|
+        e.attributes.include?(att) && e.class.to_s.deconstantize == 'Paperclip::Validators'
+      end.each do |e|
+        options = _merge_attributes([:file, e.options])
+        validates_with e.class, options
+
+      end
+    end
+
+    def target_klass
+      klass = target_type.constantize
+      fail "Suspect motive. We were expecting a subclass of ActiveRecord::Base, got <#{klass}>" unless klass < ActiveRecord::Base
+      klass
+    end
   end
 end
