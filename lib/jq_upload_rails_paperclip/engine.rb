@@ -7,13 +7,16 @@ require 'jq_upload_rails_paperclip/rails/routes'
 
 module JqUploadRailsPaperclip
   class Engine < Rails::Engine
-
     config.before_eager_load { |app| app.reload_routes! }
 
     initializer 'jq_upload_rails_paperclip.insert_into_active_record' do |app|
       ActiveSupport.on_load :active_record do
         JqUploadRailsPaperclip::Engine.insert
       end
+    end
+
+    config.generators do |g|
+      g.test_framework :rspec
     end
 
     def self.insert
