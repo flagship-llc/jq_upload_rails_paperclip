@@ -51,13 +51,11 @@ $ () ->
       .bind 'fileuploadfail', (e, data) ->
         alert 'File upload failed.'
       .bind 'fileuploadstart', (e, data) ->
-        console.log "Started."
 
         setProgress 0
         $progress_wrapper.removeClass 'hidden'
 
       .bind 'fileuploadstop', (e, data) ->
-        console.log "Finished."
 
         window.setTimeout () ->
           $progress_wrapper.addClass 'hidden'
@@ -67,7 +65,6 @@ $ () ->
         progress = parseInt(data.loaded / data.total * 100, 10)
         setProgress progress
 
-        console.log progress
 
   install_uploaders()
 
