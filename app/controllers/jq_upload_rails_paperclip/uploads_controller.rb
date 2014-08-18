@@ -11,7 +11,7 @@ module JqUploadRailsPaperclip
       if @upload.save
         render :show
       else
-        render json: { error: 'failure', errors: 'some errors' }, status: 422
+        render json: { error: 'failure', errors: @upload.errors.messages }, status: 422
       end
     end
 

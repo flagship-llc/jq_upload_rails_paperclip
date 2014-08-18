@@ -15,6 +15,16 @@ $ () ->
       $remove_image_controls = $wrapper.find '.remove-image-controls'
       $upload_id_holder = $wrapper.find '.upload-id-holder'
 
+      $progress_wrapper = $wrapper.find '.progress'
+      $progress_bar = $progress_wrapper.find '.progress-bar'
+
+      setProgress = (percent) ->
+        $progress_bar.attr
+          'aria-valuenow': percent
+        .css
+          width: "#{percent}%"
+        .text "#{percent}%"
+
       $uploader.fileupload
         url: Routes.uploads_path()
         dataType: 'json'
@@ -40,6 +50,24 @@ $ () ->
         $upload_id_holder.val result.id
       .bind 'fileuploadfail', (e, data) ->
         alert 'File upload failed.'
+      .bind 'fileuploadstart', (e, data) ->
+        console.log "Started."
+
+        setProgress 0
+        $progress_wrapper.removeClass 'hidden'
+
+      .bind 'fileuploadstop', (e, data) ->
+        console.log "Finished."
+
+        window.setTimeout () ->
+          $progress_wrapper.addClass 'hidden'
+        , 1000
+
+      .bind 'fileuploadprogress', (e, data) ->
+        progress = parseInt(data.loaded / data.total * 100, 10)
+        setProgress progress
+
+        console.log progress
 
   install_uploaders()
 

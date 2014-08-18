@@ -30,6 +30,18 @@ module JqUploadRailsPaperclip
           _buf.html_safe
         end
 
+        buf << content_tag(:div, class: %w( progress hidden )) do
+          content_tag(:div,
+            class: %w( progress-bar ),
+            role: 'progressbar',
+            'aria-valuenow' => '0',
+            'aria-valuemin' => '0',
+            'aria-valuemax' => '100',
+            style: 'width: 0%;') do
+            "0%"
+          end
+        end
+
         buf << content_tag(:div, options) do
           _buf = yield
 
@@ -40,6 +52,7 @@ module JqUploadRailsPaperclip
               attr: attrib
             },
             id: "files_uploader_#{Time.now.to_i}")
+
           _buf.html_safe
         end
 

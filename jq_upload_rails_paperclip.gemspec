@@ -21,6 +21,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "paperclip", "~> 4.2"
   spec.add_dependency 'activesupport', '>= 0'
 
+  spec.add_dependency 'coffee-rails', '>= 4.0'
+
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec-rails", "~> 3.0"
