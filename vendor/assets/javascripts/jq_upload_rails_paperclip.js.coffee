@@ -49,7 +49,13 @@ $ () ->
 
         $upload_id_holder.val result.id
       .bind 'fileuploadfail', (e, data) ->
-        alert 'File upload failed.'
+        joined_errors = new Array
+        for e in data.jqXHR.responseJSON.errors
+          joined_errors.push e
+
+        text = "ファイルアップロードが失敗しました。下記のエラーをご確認ください。\n\n#{joined_errors.join "\n"}"
+        alert text
+
       .bind 'fileuploadstart', (e, data) ->
 
         setProgress 0
@@ -59,7 +65,7 @@ $ () ->
 
         window.setTimeout () ->
           $progress_wrapper.addClass 'hidden'
-        , 1000
+        , 800
 
       .bind 'fileuploadprogress', (e, data) ->
         progress = parseInt(data.loaded / data.total * 100, 10)
