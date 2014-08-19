@@ -52,8 +52,7 @@ module JqUploadRailsPaperclip
     end
 
     def clean_paperclip_errors
-      errors.delete(:file_file_size)
-      errors.delete(:file_content_type)
+      errors.delete(:file)
     end
   end
 end
