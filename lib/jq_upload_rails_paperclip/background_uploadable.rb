@@ -28,22 +28,16 @@ module JqUploadRailsPaperclip
         _remove_image = send(:"remove_#{name}")
         if _remove_image == '1'
           send(:"#{name}=", nil)
-          send(:"#{name}_id=", 0)
+          send(:"#{name}_id=", '')
         end
         send(:"remove_#{name}=", nil)
       end
 
       # Move the image from the upload
       @klass.send(:before_validation) do
-        _image_id = send(:"#{name}_id").to_i
-        if _image_id > 0
-          upload_base_model = if self.kind_of? User
-                                self
-                              else
-                                user
-                              end
-
-          upload = upload_base_model.uploads.find _image_id
+        _image_id = send(:"#{name}_id")
+        if !_image_id.blank? and _image_id.to_i != 0
+          upload = ::JqUploadRailsPaperclip::Upload.where(identifier: _image_id).first!
           send(:"#{name}=", upload.file)
         end
       end

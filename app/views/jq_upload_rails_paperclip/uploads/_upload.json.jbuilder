@@ -1,1 +1,1 @@
-json.(upload, :id, :file_url, :created_at)
+json.(upload, :identifier, :file_url, :created_at)

@@ -47,7 +47,7 @@ $ () ->
 
         $remove_image_controls.removeClass 'hidden'
 
-        $upload_id_holder.val result.id
+        $upload_id_holder.val result.identifier
       .bind 'fileuploadfail', (e, data) ->
         joined_errors = new Array
         for e in data.jqXHR.responseJSON.errors

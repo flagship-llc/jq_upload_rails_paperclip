@@ -1,6 +1,8 @@
 class CreateUploads < ActiveRecord::Migration
   def change
     create_table :uploads do |t|
+      t.string :identifier
+
       t.references :user, index: true
       t.attachment :file
 
@@ -8,6 +10,8 @@ class CreateUploads < ActiveRecord::Migration
       t.string :target_attr
 
       t.timestamps
+
+      t.index :identifier
     end
   end
 end

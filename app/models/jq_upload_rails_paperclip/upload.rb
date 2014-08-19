@@ -10,9 +10,13 @@ module JqUploadRailsPaperclip
 
     validates :target_type, :target_attr, presence: true
 
+    validates :identifier, presence: true, uniqueness: true
+
     validate :instance_validations
 
     after_validation :clean_paperclip_errors
+
+    after_initialize :assign_identifier
 
     def file_url
       file.url(:thumbnail)
@@ -30,6 +34,10 @@ module JqUploadRailsPaperclip
     # end
 
     private
+
+    def assign_identifier
+      self.identifier = SecureRandom.hex(64) if (new_record? and identifier.blank?)
+    end
 
     def instance_validations
       klass = target_klass
