@@ -12,6 +12,8 @@ module JqUploadRailsPaperclip
 
     validate :instance_validations
 
+    after_validation :clean_paperclip_errors
+
     def file_url
       file.url(:thumbnail)
     end
@@ -47,6 +49,11 @@ module JqUploadRailsPaperclip
       klass = target_type.constantize
       fail "Suspect motive. We were expecting a subclass of ActiveRecord::Base, got <#{klass}>" unless klass < ActiveRecord::Base
       klass
+    end
+
+    def clean_paperclip_errors
+      errors.delete(:file_file_size)
+      errors.delete(:file_content_type)
     end
   end
 end
