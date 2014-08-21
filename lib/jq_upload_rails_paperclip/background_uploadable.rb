@@ -36,7 +36,7 @@ module JqUploadRailsPaperclip
       # Move the image from the upload
       @klass.send(:before_validation) do
         _image_id = send(:"#{name}_id")
-        if !_image_id.blank? and _image_id.to_i != 0
+        if !_image_id.blank? and _image_id.strip != '0'
           upload = ::JqUploadRailsPaperclip::Upload.where(identifier: _image_id).first!
           send(:"#{name}=", upload.file)
         end
