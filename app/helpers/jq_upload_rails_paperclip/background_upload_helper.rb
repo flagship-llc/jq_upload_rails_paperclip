@@ -12,12 +12,14 @@ module JqUploadRailsPaperclip
 
         buf << content_tag(:div, class: %w( image-placeholder )) do
           if model.send(:"#{attrib}?")
-            if model.persisted?
-              has_thumbnail = model.class.attachment_definitions[attrib.to_sym][:styles].has_key? :thumbnail
-              image_tag(model.send(attrib).url(has_thumbnail ? :thumbnail : :original))
-            else
-              upload = model.user.uploads.find(model.image_id)
-              image_tag(upload.file.url(:thumbnail))
+            if !model.class.attachment_definitions[attrib.to_sym].nil?
+              if model.persisted?
+                has_thumbnail = model.class.attachment_definitions[attrib.to_sym][:styles].has_key? :thumbnail
+                image_tag(model.send(attrib).url(has_thumbnail ? :thumbnail : :original))
+              else
+                upload = model.user.uploads.find(model.image_id)
+                image_tag(upload.file.url(:thumbnail))
+              end
             end
           end
         end
