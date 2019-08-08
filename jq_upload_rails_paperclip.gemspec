@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "jquery.fileupload-rails", "~> 1.10"
-  spec.add_dependency "paperclip", "~> 4.2"
+  spec.add_dependency "paperclip", "~> 6.0"
   spec.add_dependency 'activesupport', '>= 0'
 
   spec.add_dependency 'coffee-rails', '>= 4.0'
